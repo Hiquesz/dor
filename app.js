@@ -8,7 +8,7 @@ import FerramentaRouter from './src/routes/rotaFerramenta.js';
 const app = express()
 const port = process.env.PORT || 3000
 app.use(express.json())
-//porra
+
 app.use(cors())
 app.use('/Produtos', ProdutoRouter)
 app.use('/Maquinarios', MaquinarioRouter)
