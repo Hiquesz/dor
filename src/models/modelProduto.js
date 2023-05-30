@@ -1,15 +1,41 @@
-export class Produto {
-    constructor(id, nome, arq2d, arq3d, desc, imagem, dataIns, dataAlt){
-        this.id = id;
-        this.nome = nome;
-        this.arq2d = arq2d;
-        this.arq3d = arq3d;
-        this.desc = desc;
-        this.imagem = imagem;
-        this.dataIns = dataIns;
-        this.dataAlt = dataAlt;
+import { Sequelize } from "sequelize"
+import db from "../../db.js"
+
+export const Produto = db.define('Produto', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncremente: true,
+            primaryKey: true
+        },
+        nome: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        arq2d: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        arq3d: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        desc: {
+            type: Sequelize.STRING,
+        },
+        imagem: {
+            type: Sequelize.BLOB,
+            allowNull: false
+        },
+        dataIns: {
+            type: Sequelize.TEXT,
+            allowNull: false
+        },
+        dataAlt: {
+            type: Sequelize.TEXT,
+            allowNull: false
+        }
     }
-}
+)
 
 export const destroyProd = (id) => {
     const produto = FindByPk(id)

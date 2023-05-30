@@ -1,12 +1,30 @@
-export class Maquinario {
-    constructor(id, nome, idMaquinario, dataIns, dataAlt){
-        this.id = id;
-        this.nome = nome;
-        this.idMaquinario = idMaquinario;
-        this.dataIns = dataIns;
-        this.dataAlt = dataAlt;
+import { Sequelize } from "sequelize"
+import db from "../../db.js"
+
+export const Maquinario = db.define('Maquinario', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncremente: true,
+            primaryKey: true
+        },
+        nome: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        idMaquinario: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        dataIns: {
+            type: Sequelize.TEXT,
+            allowNull: false
+        },
+        dataAlt: {
+            type: Sequelize.TEXT,
+            allowNull: false
+        }
     }
-}
+)
 
 export const destroyMaq = (id) => {
     const maquinario = FindByPk(id)

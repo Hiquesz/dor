@@ -1,15 +1,42 @@
-export class Ferramenta {
-    constructor(id, idFerramenta, nome, quantidade, arq2d, arq3d, dataIns, dataAlt){
-        this.id = id;
-        this.idFerramenta = idFerramenta;
-        this.nome = nome;
-        this.quantidade = quantidade;
-        this.arq2d = arq2d;
-        this.arq3d = arq3d;
-        this.dataIns = dataIns;
-        this.dataAlt = dataAlt;
+import { Sequelize } from "sequelize"
+import db from "../../db.js"
+
+export const Ferramenta = db.define('Ferramenta', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncremente: true,
+            primaryKey: true
+        },
+        idFerramenta: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        nome: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        quantidade: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        arq2d: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        arq3d: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        dataIns: {
+            type: Sequelize.TEXT,
+            allowNull: false
+        },
+        dataAlt: {
+            type: Sequelize.TEXT,
+            allowNull: false
+        }
     }
-}
+)
 
 export const destroyFer = (id) => {
     const ferramenta = FindByPk(id)

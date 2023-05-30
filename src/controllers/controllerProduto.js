@@ -1,47 +1,45 @@
 import { createProduto,FindByPk, Produto ,getProduto, getProdutoCount, destroyProd, updateProd } from "../models/modelProduto.js";
 
 class ProdutoController {
-    static list(req,res){
-        res.json(getProduto())
-    }
-    static find(req,res){
-        res.json(req,param)
+    static async list(req,res){
+        const produtos = await Produto.findAll()
+        res.json(produtos)
     }
 
-    static createProduto(req,res){
+    static async createProduto(req,res){
         const {nome, arq2d, arq3d, desc, imagem, dataIns, dataAlt} = req.body
         if(!nome || !arq2d || !arq3d || !desc || !imagem || !dataIns || !dataAlt){
             res.status(400).json({ error: 'Nome, Arq2D, Arq3D, Descrição, Imagem, DataIns, DataAlt são obrigatórios'})
             return
         }
         const id = getProdutoCount() + 1
-        const produto = new Produto (id, nome, arq2d, arq3d, desc, imagem, dataIns, dataAlt)
-        createProduto(produto)
-        res.json(produto)
+        const createdProtudo = await Produto.create ({id, nome, arq2d, arq3d, desc, imagem, dataIns, dataAlt})
+        res.status(210).json(createdProduto)
     }
 
-    static getProdutoById(req, res) {
+    static async getProdutoById(req, res) {
         const id = parseInt(req.params.id)
-        const produto = FindByPk(id)
+        const produtos = await Produto.FindByPk(id)
         if(!produto){
             res.status(404).json({error: 'Produto não encontrado'})
+            return
         }
         res.json(produto)
     }
-    static destroyProduto(req,res) {
+    static async destroyProduto(req,res) {
         const id = parseInt(req.params.id)
-        const produto = FindByPk(id)
+        const produto = await Produto.FindByPk(id)
         if(!produto){
             res.status(404).json({error: "Produto não encontrado"})
             return
         }
-        destroyProd(id)
+        await Produto.destroyProd({where: {id: produto.id}})
         res.json({message: "Produto removido com sucesso"})
     }
 
-    static updateProduto(req,res) {
+    static async updateProduto(req,res) {
         const id = parseInt(req.params.id)
-        const produto = FindByPk(id)
+        const produto = await Produto.FindByPk(id)
         if(!produto) {
             res.status(404).json({error: "Produto não encontrado"})
             return
@@ -52,15 +50,9 @@ class ProdutoController {
             res.status(400).json({error: "O nome, Arquvivo 2D, Arquivo 3D, Descrição, Imagem, Data de Inscrição, Data de Alteração"})
             return
         }
-        produto.nome = nome,
-        produto.arq2d= arq2d
-        produto.arq3d = arq3d
-        produto.desc = desc
-        produto.imagem = imagem
-        produto.dataIns = dataIns
-        produto.dataAlt = dataAlt
+        const updatedProduto = await Produto.update({id, nome, arq2d, arq3d, desc, imagem, dataIns, dataAlt})
         updateProd(id.produto)
-        res.json(produto)
+        res.json(updateProduto)
     }
 }
 
